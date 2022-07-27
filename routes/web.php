@@ -3,6 +3,7 @@
 use App\Mail\TopicCreated;
 use App\Services\Notification\Notification;
 use App\Models\User;
+use App\Http\Controllers\NotificationsController;
 // use Illuminate\Support\Contracts\Mail;
 
 /*
@@ -17,6 +18,7 @@ use App\Models\User;
 */
 
 Route::get('/', function () {
-    $notification = resolve(Notification::class);
-    $notification->sendEmail(User::find(1) ,new TopicCreated);
+    return view('layouts.home');
 });
+
+Route::get('/notification/send-email',[NotificationsController::class,'email'])->name('notification.form.email');
