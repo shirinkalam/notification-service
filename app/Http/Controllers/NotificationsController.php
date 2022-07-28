@@ -27,8 +27,7 @@ class NotificationsController extends Controller
 
         try{
             $mailable=EmailTypes::toMail($request->email_type);
-            $notification = resolve(Notification::class);
-            $notification->sendEmail(User::find($request->user) ,new $mailable);
+            SendEmail::dispatch(User::find($request->user) ,new $mailable);
 
             return redirect()->back()->with('success',__('notification.email_sent_successfuly'));
         }catch(\Throwable $th){
@@ -42,7 +41,7 @@ class NotificationsController extends Controller
         return view('notification.send-sms',compact('users'));
     }
 
-    public function sendSms(Request $request , Notification $notification)
+    public function sendSms(Request $request)
     {
 
         $request->validate([
@@ -52,13 +51,8 @@ class NotificationsController extends Controller
 
         try{
 
-            $notification->sendSms(User::find($request->user),$request->text);
+            SendSms::dispatch(User::find($request->user),$request->text);
             return $this->redirectBack('success',__('notification.sms_sent_successfuly'));
-
-        }catch(UserDoesNotHaveNumber $e){
-
-            return $this->redirectBack('failed',__('notification.user_does_not_have_phone_number'));
-
         }
 
         catch(\Exception $e){
