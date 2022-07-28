@@ -8,7 +8,7 @@
     <div>
         <div>
             <div>
-            @lang('notification.send_email')
+            @lang('notification.send_sms')
             </div>
             @if(session('success'))
                 <div>
@@ -21,20 +21,20 @@
                 </div>
             @endif
             <div>
-                <form action="{{route('notification.form.send.email')}}" method="POST">
+                <form action="{{route('notification.form.send.sms')}}" method="POST">
                     @csrf
                     <div>
                         <label for="user">@lang('notification.users')</label>
                         <select name="user" id="">
                             @foreach ($users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            <option {{old('user')== $user->id ? 'selected' :''}} value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
                         <label for="test">@lang('notification.sms_text')</label>
                         <textarea name="text" id="text" rows="3">
-
+                            {{old('text')}}
                         </textarea>
                     </div>
                     @if ($errors->any())

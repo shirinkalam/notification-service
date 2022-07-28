@@ -6,6 +6,7 @@ use Illuminate\Mail\Mailable;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Mail;
 use App\Services\Notification\Providers\Contracts\Provider;
+use App\Services\Notification\Exceptions\UserDoesNotHaveNumber;
 
 class SmsProvider implements Provider
 {
@@ -21,9 +22,9 @@ class SmsProvider implements Provider
 
     public function send()
     {
-        $client = new Client();
+        $this->havePhoneNumber();
 
-        // dd($options);
+        $client = new Client();
 
         $response = $client->post(config('services.sms.uri') , $this->prepareDataForSms());
         return $response->getBody();
@@ -44,5 +45,12 @@ class SmsProvider implements Provider
         return [
             'json' => $data
         ];
+    }
+
+    private function havePhoneNumber()
+    {
+        if(is_null($this->user->phone_number)){
+            throw new UserDoesNotHaveNumber("User Does Not Have Phone Number");
+        }
     }
 }
