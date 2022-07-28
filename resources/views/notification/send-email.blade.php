@@ -10,11 +10,22 @@
             <div>
             @lang('notification.send_email')
             </div>
+            @if(session('success'))
+                <div>
+                    {{session('success')}}
+                </div>
+            @endif
+            @if(session('failed'))
+                <div>
+                    {{session('failed')}}
+                </div>
+            @endif
             <div>
-                <form action="" method="POST">
+                <form action="{{route('notification.form.send.email')}}" method="POST">
+                    @csrf
                     <div>
-                        <label for="tesst">@lang('notification.users')</label>
-                        <select name="" id="">
+                        <label for="user">@lang('notification.users')</label>
+                        <select name="user" id="">
                             @foreach ($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
@@ -22,12 +33,24 @@
                     </div>
                     <div>
                         <label for="test">@lang('notification.email_type')</label>
-                        <select name="test" id="">
+                        <select name="email_type" id="email_type">
                             @foreach($emailTypes as $key => $type)
                                 <option value="{{$key}}">{{$type}}</option>
                             @endforeach
                         </select>
                     </div>
+                    @if ($errors->any())
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <div>
+                                <li>
+                                    {{$error}}
+                                </li>
+                            </div>
+                            @endforeach
+                        </ul>
+                    @endif
+
                     <button type="submit">@lang('notification.send')</button>
                 </form>
             </div>

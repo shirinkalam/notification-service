@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Services\Notification\Constants;
+use App\Mail\UserRegistered;
+use App\Mail\TopicCreated;
+use App\Mail\ForgetPassword;
 
 class EmailTypes
 {
@@ -16,4 +19,18 @@ class EmailTypes
             self::FORGET_PASSWORD =>'فراموشی رمز عبور'
         ];
     }
+
+    public static function toMail($type)
+    {
+        try{
+            return [
+                self::USER_REGISTERED =>UserRegistered::class,
+                self::TOPIC_CREATED =>TopicCreated::class,
+                self::FORGET_PASSWORD =>ForgetPassword::class,
+            ][$type];
+        }catch(\Throwable $th){
+            throw new \InvalidArgumentException("Mailable Class Does Not Exist");
+        }
+    }
+
 }

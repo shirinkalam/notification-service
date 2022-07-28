@@ -12,6 +12,7 @@
 */
 
 return [
+
     'accepted'             => ':attribute باید پذیرفته شده باشد.',
     'accepted_if'          => 'The :attribute must be accepted when :other is :value.',
     'active_url'           => 'آدرس :attribute معتبر نیست.',
@@ -165,5 +166,7 @@ return [
         'title'                 => 'عنوان',
         'username'              => 'نام کاربری',
         'year'                  => 'سال',
+        'user'                  => 'کاربر',
+        'email_type'                  => 'نوع ایمیل',
     ],
 ];
