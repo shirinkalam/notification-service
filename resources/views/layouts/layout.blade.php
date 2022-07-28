@@ -22,6 +22,9 @@
                     <div>
                         <a href="{{ route('notification.form.email')}}">
                             ارسال ایمیل
+                        </a><br>
+                        <a href="{{ route('notification.form.sms')}}">
+                            ارسال پیام کوتاه
                         </a>
                     </div>
                 </li>

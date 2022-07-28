@@ -35,4 +35,10 @@ class NotificationsController extends Controller
             return redirect()->back()->with('failed',__('notification.email_sent_failed'));
         }
     }
+
+    public function sms()
+    {
+        $users=User::all();
+        return view('notification.send-sms',compact('users'));
+    }
 }

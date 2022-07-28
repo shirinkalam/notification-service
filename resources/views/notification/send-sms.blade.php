@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title' , 'Send Email')
+@section('title' , 'Send Sms')
 
 @section('content')
 
@@ -32,12 +32,10 @@
                         </select>
                     </div>
                     <div>
-                        <label for="test">@lang('notification.email_type')</label>
-                        <select name="email_type" id="email_type">
-                            @foreach($emailTypes as $key => $type)
-                                <option value="{{$key}}">{{$type}}</option>
-                            @endforeach
-                        </select>
+                        <label for="test">@lang('notification.sms_text')</label>
+                        <textarea name="text" id="text" rows="3">
+
+                        </textarea>
                     </div>
                     @if ($errors->any())
                         <ul>
